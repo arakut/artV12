@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная страница</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+</head>
+<body>
+
+<h1>Тут писать текст: </h1>
+{% for msg in get_flashed_messages() %}
+    <div class="flash"> {{msg}} </div>
+{% endfor %}
+
+
+    <script>
+        $(document).ready(function(){
+            var count_input = 1;
+            $("#add_text").on("click", function(){
+                count_input += 1;
+                $("<input/>").attr({ type: "text", placeholder: "Введите ваш другой текст", required: true,
+                    name: "input_"+count_input}).appendTo("#inputs").wrap($("<div/>"));
+            });
+        })
+
+    </script>
+
+<p>Ваш текст: </p>
+    <form action="/" method="post">
+        <div id="inputs"></div>
+        <input type="text" name="input" placeholder="Введите ваш текст" required />
+        <button id="add_text" type="button">Добавить строку для текста</button>
+        <input type="submit" value="Отправить">
+    </form>
+
+
+</body>
+</html>
