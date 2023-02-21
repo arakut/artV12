@@ -6,7 +6,11 @@ from sqlalchemy.dialects.postgresql import JSONB
 # Конфигурации приложения
 DEBUG = True
 SECRET_KEY = 'adsgt5478ffh3h13duj0'
-SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:hfmcjdh563@localhost/all_inputs'
+DB_HOST = "localhost"
+DB_NAME = "inputs_db"
+DB_USER = "postgres"
+DB_PASS = "hfmcjdh563"
+SQLALCHEMY_DATABASE_URI = f'postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}'
 
 # Создание приложения Flask и БД с указанной выше конфигурацией
 app = Flask(__name__)
