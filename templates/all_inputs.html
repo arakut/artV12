@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <h1>Тут смотреть текст</h1>
+    <p><form action="/">
+        <button>Вернуться к добавлению текста</button>
+    </form>
+    <div class="content">
+        {% for val in input_table %}
+            <p>{{ val.id }} - {{ val.attrs }}</p>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -33,6 +33,7 @@ class InputTable(db.Model):
 def index():
     """Главная страница с динамическими инпутами и добавлением их в БД"""
     if request.method == 'POST':
+        flash('Ваш текст успешно сохранен')
         db.create_all()
         inputs = dict(request.form.items())
 
@@ -46,8 +47,9 @@ def index():
 
 @app.route('/all_inputs', methods=['GET'])
 def show_inputs():
+    """Страница с отображением сохраненного текста"""
     input_table = InputTable.query.all()
-    return render_template('all-inputs.html', input_table=input_table)
+    return render_template('all_inputs.html', input_table=input_table)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -6,33 +6,43 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 </head>
 <body>
-
-<h1>Тут писать текст: </h1>
-{% for msg in get_flashed_messages() %}
-    <div class="flash"> {{msg}} </div>
-{% endfor %}
-
-
+{% block content %}
     <script>
         $(document).ready(function(){
             var count_input = 1;
-            $("#add_text").on("click", function(){
+            $("#add_text").click(function(e) {
                 count_input += 1;
-                $("<input/>").attr({ type: "text", placeholder: "Введите ваш другой текст", required: true,
-                    name: "input_"+count_input}).appendTo("#inputs").wrap($("<div/>"));
+                $("#RowInput").append('<div class="row"><input type="text" required placeholder="Строка '+count_input+'" ' +
+                                      'name="input_'+count_input+'"/> <a href="#" class="remove_row">Удалить</a></div>');
+                $("body").on("click", ".remove_row", function (e){
+                    count_input -= 1;
+                    if (count_input > 1) {
+                        $(this).parent('div').remove();
+
+                    }
+                    count_input -= 1;
+                })
             });
-        })
-
+        });
     </script>
+    {% for msg in get_flashed_messages() %}
+        <div class="flash"> {{msg}} </div>
+    {% endfor %}
+    <h1>Тут писать текст: </h1>
 
-<p>Ваш текст: </p>
-    <form action="/" method="post">
-        <div id="inputs"></div>
-        <input type="text" name="input" placeholder="Введите ваш текст" required />
-        <button id="add_text" type="button">Добавить строку для текста</button>
+    <p><form action="all_inputs">
+        <button>Посмотреть сохраненный текст</button>
+    </form>
+    <p>Ваш текст: </p>
+    <p><form action="/" method="post">
+        <div id="RowInput">
+            <div class="row">
+                <input type="text" name="input_1" placeholder="Строка 1" required />
+                <button id="add_text" type="button">Добавить строку для текста</button>
+            </div>
+        </div>
         <input type="submit" value="Отправить">
     </form>
-
-
+{% endblock %}
 </body>
 </html>
