@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import JSONB
+from flask_migrate import Migrate
 
 
 # Конфигурации приложения
@@ -16,7 +17,7 @@ SQLALCHEMY_DATABASE_URI = f'postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}
 app = Flask(__name__)
 app.config.from_object(__name__)
 db = SQLAlchemy(app)
-
+migrate = Migrate(app, db)
 
 # Создание модели для БД
 class InputTable(db.Model):
@@ -38,7 +39,6 @@ def index():
     """Главная страница с динамическими инпутами и добавлением их в БД"""
     if request.method == 'POST':
         flash('Ваш текст успешно сохранен')
-        db.create_all()
         inputs = dict(request.form.items())
 
         for value in inputs:
@@ -56,4 +56,4 @@ def show_inputs():
     return render_template('all_inputs.html', input_table=input_table)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
